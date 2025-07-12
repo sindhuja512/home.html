@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .input-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        #taskInput {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        #taskInput:focus {
+            outline: none;
+            border-color: #4facfe;
+        }
+
+        #addBtn {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        #addBtn:hover {
+            transform: translateY(-2px);
+        }
+
+        .priority-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .priority-btn {
+            padding: 8px 15px;
+            border: 2px solid;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .priority-btn.high {
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .priority-btn.medium {
+            border-color: #feca57;
+            color: #feca57;
+        }
+
+        .priority-btn.low {
+            border-color: #48dbfb;
+            color: #48dbfb;
+        }
+
+        .priority-btn.active.high {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .priority-btn.active.medium {
+            background: #feca57;
+            color: white;
+        }
+
+        .priority-btn.active.low {
+            background: #48dbfb;
+            color: white;
+        }
+
+        .todo-list {
+            padding: 30px;
+            min-height: 200px;
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .todo-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .todo-item.high {
+            border-left-color: #ff6b6b;
+        }
+
+        .todo-item.medium {
+            border-left-color: #feca57;
+        }
+
+        .todo-item.low {
+            border-left-color: #48dbfb;
+        }
+
+        .todo-item.completed {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+
+        .todo-checkbox {
+            margin-right: 15px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .todo-text {
+            flex: 1;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        .priority-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .priority-badge.high {
+            background: #ff6b6b;
+        }
+
+        .priority-badge.medium {
+            background: #feca57;
+        }
+
+        .priority-badge.low {
+            background: #48dbfb;
+        }
+
+        .delete-btn {
+            padding: 5px 10px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
+
+        .delete-btn:hover {
+            background: #ff5252;
+        }
+
+        .stats {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4facfe;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📝 My Todo List</h1>
+            <p>Stay organized and productive!</p>
+        </div>
+        
+        <div class="input-section">
+            <div class="input-container">
+                <input type="text" id="taskInput" placeholder="Enter a new task..." maxlength="100">
+                <button id="addBtn">Add Task</button>
+            </div>
+            <div class="priority-selector">
+                <span>Priority:</span>
+                <div class="priority-btn high" data-priority="high">High</div>
+                <div class="priority-btn medium active" data-priority="medium">Medium</div>
+                <div class="priority-btn low" data-priority="low">Low</div>
+            </div>
+        </div>
+        
+        <div class="todo-list" id="todoList">
+            <div class="empty-state">
+                <div>📋</div>
+                <p>No tasks yet. Add one above to get started!</p>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="totalTasks">0</div>
+                <div class="stat-label">Total Tasks</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="completedTasks">0</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="pendingTasks">0</div>
+                <div class="stat-label">Pending</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tasks = [];
+        let currentPriority = 'medium';
+
+        // DOM elements
+        const taskInput = document.getElementById('taskInput');
+        const addBtn = document.getElementById('addBtn');
+        const todoList = document.getElementById('todoList');
+        const priorityBtns = document.querySelectorAll('.priority-btn');
+        const totalTasksEl = document.getElementById('totalTasks');
+        const completedTasksEl = document.getElementById('completedTasks');
+        const pendingTasksEl = document.getElementById('pendingTasks');
+
+        // Event listeners
+        addBtn.addEventListener('click', addTask);
+        taskInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addTask();
+            }
+        });
+
+        priorityBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                priorityBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentPriority = this.dataset.priority;
+            });
+        });
+
+        // Functions
+        function addTask() {
+            const taskText = taskInput.value.trim();
+            if (taskText === '') {
+                alert('Please enter a task!');
+                return;
+            }
+
+            const task = {
+                id: Date.now(),
+                text: taskText,
+                priority: currentPriority,
+                completed: false,
+                createdAt: new Date()
+            };
+
+            tasks.push(task);
+            taskInput.value = '';
+            renderTasks();
+            updateStats();
+        }
+
+        function deleteTask(id) {
+            tasks = tasks.filter(task => task.id !== id);
+            renderTasks();
+            updateStats();
+        }
+
+        function toggleTask(id) {
+            tasks = tasks.map(task => {
+                if (task.id === id) {
+                    task.completed = !task.completed;
+                }
+                return task;
+            });
+            renderTasks();
+            updateStats();
+        }
+
+        function renderTasks() {
+            if (tasks.length === 0) {
+                todoList.innerHTML = `
+                    <div class="empty-state">
+                        <div>📋</div>
+                        <p>No tasks yet. Add one above to get started!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort tasks by priority (high -> medium -> low) and completion status
+            const sortedTasks = tasks.sort((a, b) => {
+                if (a.completed !== b.completed) {
+                    return a.completed - b.completed;
+                }
+                const priorityOrder = { high: 0, medium: 1, low: 2 };
+                return priorityOrder[a.priority] - priorityOrder[b.priority];
+            });
+
+            todoList.innerHTML = sortedTasks.map(task => `
+                <div class="todo-item ${task.priority} ${task.completed ? 'completed' : ''}">
+                    <input type="checkbox" class="todo-checkbox" ${task.completed ? 'checked' : ''} 
+                           onchange="toggleTask(${task.id})">
+                    <div class="todo-text">
+                        <span class="priority-badge ${task.priority}">${task.priority.toUpperCase()}</span>
+                        ${task.text}
+                    </div>
+                    <button class="delete-btn" onclick="deleteTask(${task.id})">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        function updateStats() {
+            const total = tasks.length;
+            const completed = tasks.filter(task => task.completed).length;
+            const pending = total - completed;
+
+            totalTasksEl.textContent = total;
+            completedTasksEl.textContent = completed;
+            pendingTasksEl.textContent = pending;
+        }
+
+        // Initialize with sample tasks
+        tasks = [
+            { id: 1, text: "Review project proposal", priority: "high", completed: false, createdAt: new Date() },
+            { id: 2, text: "Buy groceries", priority: "medium", completed: false, createdAt: new Date() },
+            { id: 3, text: "Water the plants", priority: "low", completed: true, createdAt: new Date() }
+        ];
+
+        renderTasks();
+        updateStats();
+    </script>
+</body>
+</html>

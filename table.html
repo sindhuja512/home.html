@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Table Demo</title>
+  <style>
+    table, th, td {
+      border: 1px solid #666;
+      border-collapse: collapse;
+      padding: 8px;
+    }
+    th {
+      background-color: #eee;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Student List</h1>
+  <table id="studentTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Grade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Rows will be inserted here -->
+    </tbody>
+  </table>
+
+  <script>
+    // 1. Declare an array of student objects using var
+    var students = [
+      { name: "Alice", age: 16, grade: "10th" },
+      { name: "Bob",   age: 17, grade: "11th" },
+      { name: "Cara",  age: 15, grade: "9th" }
+      
+    ];
+    
+    // 2. Get the table body element
+    var tbody = document.getElementById("studentTable").getElementsByTagName("tbody")[0];
+
+    // 3. Loop through array and create rows
+    for (var i = 0; i < students.length; i++) {
+      var s = students[i]; // current student object
+      var row = document.createElement("tr");
+
+      // Create and fill cells
+      var cellName  = document.createElement("td");
+      var cellAge   = document.createElement("td");
+      var cellGrade = document.createElement("td");
+    
+
+      
+      cellName.textContent  = s.name;
+      cellAge.textContent   = s.age;
+      cellGrade.textContent = s.grade;
+      
+
+      // Append cells to row
+      row.appendChild(cellName);
+      row.appendChild(cellAge);
+      row.appendChild(cellGrade);
+
+      // Append row to table body
+      tbody.appendChild(row);
+    }
+  </script>
+
+</body>
+</html>
