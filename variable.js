@@ -1,3 +1,19 @@
+//variable declaration and intialization
+//Variables
+
+var name = "sindhu";
+var age = 22;
+var isMarried = false; // corrected spelling
+var city = "chennai";
+var state = "Tamil Nadu";
+
+console.log(name);
+console.log(age);
+console.log(isMarried); // now matches the variable name
+console.log(city);
+console.log(state);
+
+
 //Objects
 var user = {
     name: "Sindhu",
@@ -62,15 +78,15 @@ console.log(students[2].name);
 students[2].name = "Ramesh";
 console.log(students);
 //Arithmatic operators
-var a=10;
-var b=20;
+var a = 10;
+var b = 20;
 
-console.log(a+b);
-console.log(a-b);
-console.log(a*b);
-console.log(a/b);
-console.log(a%b);
-console.log(a**b);
+console.log(a + b);
+console.log(a - b);
+console.log(a * b);
+console.log(a / b);
+console.log(a % b);
+console.log(a ** b);
 
 //Assignment operators
 var a = 10;
