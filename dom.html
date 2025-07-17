@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+//1
+<p id="text1">This is a sample text.</p>
+<button onclick="changeColor()">Change Color</button>
+<script>
+    function changeColor() {
+        var paragraph = document.getElementById("text1");
+        paragraph.style.color = "red";
+    }
+</script>
+//2
+<p id="text2">You can hide or show me.</p>
+<button onclick="toggleText()">Toggle Visibility</button>
+
+<script>
+    function toggleText() {
+        var paragraph = document.getElementById("text2");
+        if (paragraph.style.display === "none") {
+            paragraph.style.display = "block"; // show it
+        } else {
+            paragraph.style.display = "none";  // hide it
+        }
+    }
+</script>
+//3
+<div id="content">Old Text</div>
+<button onclick="updateContent()">Update Text</button>
+
+<script>
+    function updateContent() {
+        var div = document.getElementById('content');
+        div.textContent = 'New Text';
+    }
+</script>
+//4
+<button onclick="changeBackground()">Change Background</button>
+
+<script>
+    function changeBackground() {
+        document.body.style.backgroundColor = "lightblue";
+    }
+</script>
+<p id="text5">Increase my font size!</p>
+<button onclick="increaseFont()">Increase Font</button>
+//5
+<script>
+    function increaseFont() {
+        // TODO: Increase the font size by 2px on each click
+        var currentSize = window.getComputedStyle(paragraph).fontSize;
+
+        // Convert to number (remove "px" and parse as integer)
+        var newSize = parseInt(currentSize) + 2;
+
+        // Set the new font size
+        paragraph.style.fontSize = newSize + "px";
+    }
+</script>
+//6
+<img id="myImage" src="img1.jpg" width="100" />
+<button onclick="changeImage()">Change Image</button>
+<script>
+    function changeImage() {
+        // TODO: Change the image source to a different image
+        var image = document.getElementById('myImage');
+        image.src = "img2.jpg";
+    }
+</script>
+//7
+<ul id="myList">
+    <li>Item 1</li>
+</ul>
+<button onclick="addListItem()">Add Item</button>
+<script>
+    function addListItem() {
+        // Create a new list item and append to the list
+        var ul = document.getElementById('myList');
+        var li = document.createElement('li');
+        li.textContent = 'New Item';
+        ul.appendChild(li);
+    }
+</script>
+//8
+<p id="removeMe">Please remove me!</p>
+<button onclick="removeParagraph()">Remove</button>
+<script>
+    function removeParagraph() {
+        // TODO: Remove the paragraph from DOM
+        var paragraph = document.getElementById('removeMe');
+        paragraph.style.display = "none";
+    }
+</script>
+//9
+<p id="styleMe">Style me with multiple changes!</p>
+<button onclick="changeStyles()">Change Styles</button>
+
+<script>
+    function changeStyles() {
+        // TODO: Change at least 3 styles like color, background, and padding
+        var paragraph = document.getElementById('styleMe');
+        paragraph.style.color = "white";
+        paragraph.style.backgroundColor = "red";
+        paragraph.style.padding = "20px";
+    }
+
+</script>
